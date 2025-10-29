@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Padosi Jii 💛</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * {margin:0; padding:0; box-sizing:border-box; font-family:"Poppins",sans-serif;}
+  body {
+    background:linear-gradient(135deg,#fffbea,#fff9d6);
+    display:flex; justify-content:center; align-items:center;
+    height:100vh; transition:opacity 1s ease;
+  }
+  .card {
+    background:white; border-radius:20px;
+    box-shadow:0 0 20px rgba(0,0,0,0.1);
+    padding:30px; text-align:center;
+    width:90%; max-width:400px; transition:opacity 1s ease;
+  }
+  h1 {color:black; font-size:2.2em;}
+  .highlight {color:#FFD700; font-weight:700;}
+  .message {margin-top:15px; font-size:1.1em; font-weight:600;}
+  .cake {width:150px; margin:20px auto; display:block;}
+  
+  button {
+    margin-top:25px; padding:10px 20px;
+    background:#FFD700; border:none; border-radius:25px;
+    font-size:1em; font-weight:bold; cursor:pointer;
+    transition:all .4s ease; opacity:0; transform:translateY(20px);
+  }
+  button.show {
+    opacity:1; transform:translateY(0);
+    animation:pulse 1.8s infinite ease-in-out;
+  }
+  button:hover {
+    background:black; color:white; transform:scale(1.1);
+  }
+
+  /* Button size pulse animation */
+  @keyframes pulse {
+    0%,100% {transform:translateY(0) scale(1);}
+    50% {transform:translateY(0) scale(1.07);}
+  }
+
+  .typewriter {
+    font-size:1.1em; font-weight:600; color:black;
+    min-height:140px; text-align:center; white-space:pre-line;
+  }
+  .typewriter-left {
+    font-size:1.05em; font-weight:600; color:black;
+    min-height:140px; text-align:left; white-space:pre-line;
+  }
+
+  .hidden{display:none;}
+  .fadeOut{opacity:0; pointer-events:none;}
+  .fadeIn{opacity:1; pointer-events:all;}
+</style>
+</head>
+<body>
+
+<!-- background music -->
+<audio id="bg-music" src="au.mp3" preload="auto"></audio>
+
+<script>
+const music=document.getElementById("bg-music");
+window.addEventListener("click",()=>{
+  music.currentTime=0;
+  music.volume=0.8;
+  music.play().catch(err=>console.log("Audio play blocked:",err));
+},{once:true});
+</script>
+
+<div class="card" id="page1">
+  <h1>Happy Birthday <span class="highlight">Padosi Jii 💛</span></h1>
+  <img src="https://media.tenor.com/F1ORbCkWzdsAAAAm/birthday-cake-joypixels.webp" class="cake">
+  <p class="message">Court adjourned! Time to celebrate your birthday 🎂</p>
+  <button class="show" onclick="nextPage(2)">Click to Reveal 🎁</button>
+</div>
+
+<div class="card hidden" id="page2">
+  <div id="msg2" class="typewriter"></div>
+  <button id="btn2" onclick="nextPage(3)">Something 4 U 💌</button>
+</div>
+
+<div class="card hidden" id="page3">
+  <h2 style="color:#FFD700; text-align:center;">Court Message ⚖️</h2>
+  <div id="typewriter3" class="typewriter-left"></div>
+  <button id="btn3" onclick="nextPage(4)">Next ➡️</button>
+</div>
+
+<div class="card hidden" id="page4">
+  <h2>Once again Happy Birthday <span class="highlight">Padosi Jii 💛</span></h2>
+  <p class="message">I wish aap humesha khush raho 💖<br>Good night, take care & sweet dreams 😴✨</p>
+  <button class="show" onclick="location.reload()">Thank You 💛</button>
+</div>
+
+<script>
+let currentPage=1;
+function nextPage(num){
+  document.getElementById(`page${currentPage}`).classList.add("fadeOut");
+  setTimeout(()=>{
+    document.getElementById(`page${currentPage}`).classList.add("hidden");
+    document.getElementById(`page${num}`).classList.remove("hidden");
+    document.getElementById(`page${num}`).classList.add("fadeIn");
+    currentPage=num;
+    if(num===2) startTypewriter2();
+    if(num===3) startTypewriter3();
+  },800);
+}
+
+// page2 typewriter
+function startTypewriter2(){
+  const text="Thoda bahut humne bhi kama rakha hai,\nEk Kohinoor si ladki ko apna dost bana rakha hai 😄💫";
+  let i=0, speed=80;
+  const msg=document.getElementById("msg2");
+  const btn=document.getElementById("btn2");
+  msg.textContent="";
+  btn.classList.remove("show");
+  (function type(){
+    if(i<text.length){
+      msg.textContent+=text.charAt(i); i++; setTimeout(type,speed);
+    } else {
+      setTimeout(()=>btn.classList.add("show"),400);
+    }
+  })();
+}
+
+// page3 typewriter sequential
+function startTypewriter3(){
+  const lines=[
+    "1) Evidence is clear: Your smile is the most expensive in the world 💎",
+    "2) I wish God gives you a lifetime bail from sadness 🙏",
+    "3) Legal Notice: Smile is compulsory 😄",
+    "4) Your happiness is a fundamental right for me 💖",
+    "5) Your presence is evidence that sweetness exists in the world 🍯",
+    "6) Case Closed: Happiness restored, celebrate your day 🎉"
+  ];
+  const el=document.getElementById("typewriter3");
+  const btn=document.getElementById("btn3");
+  el.innerHTML=""; btn.classList.remove("show");
+  let lineIndex=0;
+  function typeLine(){
+    if(lineIndex>=lines.length){setTimeout(()=>btn.classList.add("show"),600); return;}
+    let line=lines[lineIndex]; let i=0;
+    let div=document.createElement("div");
+    div.style.color=lineIndex===0?"#FFD700":"black";
+    el.appendChild(div);
+    let speed=50;
+    (function typeChar(){
+      if(i<line.length){
+        div.textContent+=line.charAt(i); i++; setTimeout(typeChar,speed);
+      } else {div.innerHTML+="<br>"; lineIndex++; setTimeout(typeLine,600);}
+    })();
+  }
+  typeLine();
+}
+</script>
+</body>
+</html>
